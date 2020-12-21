@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/chyroc/go-render"
+	"github.com/chyroc/render"
 )
 
 func Test_External(t *testing.T) {
