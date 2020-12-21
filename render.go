@@ -93,6 +93,17 @@ func (s *traverseState) render(buf *bytes.Buffer, ptrs int, v reflect.Value, imp
 	}
 	vt := v.Type()
 
+	registerdFormat := getFormatFunc(vt)
+	if registerdFormat != nil {
+		if !implicit {
+			writeType(buf, ptrs, vt)
+		}
+		buf.WriteRune('(')
+		buf.WriteString(registerdFormat(v.Interface()))
+		buf.WriteRune(')')
+		return
+	}
+
 	// If the type being rendered is a potentially recursive type (a type that
 	// can contain itself as a member), we need to avoid recursion.
 	//
