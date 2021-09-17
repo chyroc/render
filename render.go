@@ -99,7 +99,11 @@ func (s *traverseState) render(buf *bytes.Buffer, ptrs int, v reflect.Value, imp
 			writeType(buf, ptrs, vt)
 		}
 		buf.WriteRune('(')
-		buf.WriteString(registerdFormat(v.Interface()))
+		if v.CanInterface() {
+			buf.WriteString(registerdFormat(v.Interface()))
+		} else {
+			buf.WriteString("<unexport field>")
+		}
 		buf.WriteRune(')')
 		return
 	}
